@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { assets, projectsData } from "../assets/assets.js";
+
 const Projects = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsToUpdate, setCardsToUpdate] = useState(1);
 
-  const [currentIndex , setCurrentIndex] = useState(0);
-  const [cardsToUpdate , setCardsToUpdate] = useState(1);
+  const nextProject = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
+  };
 
-  const nextProject =() =>  {
-    setCurrentIndex((pervIndex) => (pervIndex + 1) % projectsData.length)
-  }
-
-  const prevProject =() =>  {
-    setCurrentIndex((pervIndex) => pervIndex === 0? projectsData.length - 1 : pervIndex - 1)
-  }
+  const prevProject = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? projectsData.length - 1 : prevIndex - 1
+    );
+  };
 
   useEffect(() => {
     const updateCardsToShow = () => {
-      if(window.innerHeight >= 1024){
-        setCardsToUpdate(projectsData.length)
-      }else {
-        setCardsToUpdate(1)
+      if (window.innerWidth >= 1024) {
+        setCardsToUpdate(4); // Show 4 cards on larger screens
+      } else {
+        setCardsToUpdate(1); // Show 1 card on smaller screens
       }
     };
 
@@ -26,13 +28,13 @@ const Projects = () => {
 
     window.addEventListener("resize", updateCardsToShow);
     return () => window.removeEventListener("resize", updateCardsToShow);
-  },[])
+  }, []);
 
   return (
-    <div className="container mx-auto flex justify-center items-center flex-col  p-14 md:px-20 lg:px-32 w-full overflow-hidden">
+    <div className="container mx-auto flex justify-center items-center flex-col p-14 md:px-20 lg:px-32 w-full overflow-hidden">
       <h1 className="text-3xl lg:text-4xl font-bold">
         Projects{" "}
-        <span className="font-light underline decoration-1 underline-offset-4  ">
+        <span className="font-light underline decoration-1 underline-offset-4">
           Completed
         </span>{" "}
       </h1>
@@ -40,21 +42,20 @@ const Projects = () => {
         Crafting Spaces, Building Legacies—Explore Our Portfolio
       </p>
 
-      {/* Slider Button*/}
-
-      <div className="container flex items-center justify-end  mb-8">
+      {/* Slider Buttons */}
+      <div className="container flex items-center justify-end mb-8">
         <div className="flex gap-2">
           <button
-          onClick={prevProject}
+            onClick={prevProject}
             className="px-5 py-3 bg-gray-200 rounded hover:bg-gray-300 transition-all"
-            aria-level="Previous Projects"
+            aria-label="Previous Projects"
           >
             <img src={assets.left_arrow} alt="Previous" />
           </button>
           <button
-          onClick={nextProject}
+            onClick={nextProject}
             className="px-5 py-3 bg-gray-200 rounded hover:bg-gray-300 transition-all"
-            aria-level="Next Projects"
+            aria-label="Next Projects"
           >
             <img src={assets.right_arrow} alt="Next" />
           </button>
@@ -62,25 +63,40 @@ const Projects = () => {
       </div>
 
       {/* Projects Slider */}
-
-      <div className="overflow-hidden">
-        <div className="flex gap-8 transition-transform ease-in-out duration-500"
-        style={{transform:`translateX(-${(currentIndex * 100) / cardsToUpdate}%)`}}
+      <div className="overflow-hidden w-full">
+        <div
+          className="flex gap-8 transition-transform ease-in-out duration-500"
+          style={{
+            transform: `translateX(-${(currentIndex * 100) / cardsToUpdate}%)`
+          }}
         >
-          {projectsData.map((project,index) => (
-            <div key={index} className="relative flex-shrink-0 w-full sm:w-1/4">
-              <img src={project.image} alt={project.title} />
-              <div className="w-3/4 p-2 shadow bg-gray-100 absolute z-40 left-0 right-0 bottom-5">
+          {projectsData.map((project, index) => (
+            <div
+              key={index}
+              className={`relative flex-shrink-0 ${
+                cardsToUpdate === 1 ? "w-full" : "w-1/4"
+              }`}
+              style={{
+                minWidth: cardsToUpdate === 1 ? "100%" : "25%", // Ensures each slide takes up full width on mobile
+              }}
+            >
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-auto object-cover"
+              />
+              <div className="w-3/4 p-2 shadow bg-gray-100 absolute z-40 left-0 right-0 bottom-5 mx-auto">
                 <h2 className="text-xl font-semibold">{project.title}</h2>
                 <div className="text-gray-500">
-                  <p>{project.price} <span>|</span> {project.location}</p>                  
+                  <p>
+                    {project.price} <span>|</span> {project.location}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      
     </div>
   );
 };
