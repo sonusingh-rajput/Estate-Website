@@ -31,7 +31,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="container mx-auto flex justify-center items-center flex-col p-14 md:px-20 lg:px-32 w-full overflow-hidden">
+    <div id="Project" className="container mx-auto flex justify-center items-center flex-col p-14 md:px-20 lg:px-32 w-full overflow-hidden">
       <h1 className="text-3xl lg:text-4xl font-bold">
         Projects{" "}
         <span className="font-light underline decoration-1 underline-offset-4">

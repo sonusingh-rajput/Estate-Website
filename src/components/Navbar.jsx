@@ -14,10 +14,10 @@ const Navbar = () => {
           <a href="#About" className="cursor-pointer hover:text-gray-200">
             About
           </a>
-          <a href="#Projects" className="cursor-pointer hover:text-gray-200">
+          <a href="#Project" className="cursor-pointer hover:text-gray-200">
             Projects
           </a>
-          <a href="#Testimonials" className="cursor-pointer hover:text-gray-200">
+          <a href="#Testimonial" className="cursor-pointer hover:text-gray-200">
             Testimonials
           </a>
         </ul>
@@ -34,8 +34,8 @@ const Navbar = () => {
       <ul className="flex flex-col items-center gap-2 mt-16 font-medium text-lg h-screen">
           <a onClick={() => SetShowMobileMenu(false)} href="#Header" className="px-4 py-2 rounded-full inline-block">Home</a>
           <a onClick={() => SetShowMobileMenu(false)} href="#About" className="px-4 py-2 rounded-full inline-block">About</a>
-          <a onClick={() => SetShowMobileMenu(false)} href="#projects" className="px-4 py-2 rounded-full inline-block">Projects</a>
-          <a onClick={() => SetShowMobileMenu(false)} href="#Testimonials" className="px-4 py-2 rounded-full inline-block">Testimonials</a>
+          <a onClick={() => SetShowMobileMenu(false)} href="#Project" className="px-4 py-2 rounded-full inline-block">Projects</a>
+          <a onClick={() => SetShowMobileMenu(false)} href="#Testimonial" className="px-4 py-2 rounded-full inline-block">Testimonials</a>
       </ul>
    </div>
     </div>
